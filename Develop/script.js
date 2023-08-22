@@ -1,17 +1,38 @@
-// Wrap all code that interacts with the DOM in a call to jQuery to ensure that
-// the code isn't run until the browser has finished rendering all the elements
-// in the html.
+// The global variables
 var today = dayjs();
-$('#currentDay').text(today.format('dddd, MMMM, DD'));
+// This method added the current day and month
+$("#currentDay").text(today.format("dddd, MMMM DD"));
+// This function saves the user input into the local storage
 $(document).ready(function () {
- 
-  // TODO: Add a listener for click events on the save button. This code should
-  // use the id in the containing time-block as a key to save the user input in
-  // local storage. HINT: What does `this` reference in the click listener
-  // function? How can DOM traversal be used to get the "hour-x" id of the
-  // time-block containing the button that was clicked? How might the id be
-  // useful when saving the description in local storage?
-  //
+  $(document).on("click", ".saveBtn", function () {
+    var input = $(this).closest(".time-block").find(".description");
+    var inputValue = input.val();
+    localStorage.setItem("input", JSON.stringify(inputValue));
+  });
+  // This function checks for all id's that have "hour" and compares the value to
+  // current time. If value matches criteria then the classes are changed
+  $(document).ready(function () {
+    var currentTime = dayjs().hour();
+    $('[id^="hour-"]').each(function () {
+      var idEl = $(this).attr("id");
+      var idSplit = idEl.split("-");
+      var hour = idSplit[1];
+      if (hour === currentTime) {
+        $(this).removeClass("past");
+        $(this).removeClass("future");
+        $(this).addClass("present");
+      } else if (hour < currentTime) {
+        $(this).addClass("past");
+        $(this).removeClass("future");
+        $(this).removeClass("present");
+      } else if (hour > currentTime) {
+        $(this).addClass("future");
+        $(this).removeClass("past");
+        $(this).removeClass("present");
+      }
+      // console.log(currentTime.hour());
+    });
+  });
   // TODO: Add code to apply the past, present, or future class to each time
   // block by comparing the id to the current hour. HINTS: How can the id
   // attribute of each time-block be used to conditionally add or remove the
