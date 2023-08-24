@@ -2,11 +2,17 @@ $(document).ready(function () {
   var today = dayjs();
   var date = today.date();
   var suffix = getSuffix(date);
+  // this function saves the content to local storage
+
   $(document).on("click", ".saveBtn", function () {
     var input = $(this).siblings(".description").val();
     var time = $(this).parent().attr("id");
+    // this shows the text that appointment was added to local storage
+    $("#saved-confirm").show();
     // saves time and input in local storage
     localStorage.setItem(time, input);
+
+
   });
   // This function checks for all id's that have "hour" and compares the value to
   // current time. If value matches criteria then the classes are changed
@@ -15,6 +21,7 @@ $(document).ready(function () {
   
     $('.time-block').each(function () {
       var hour = $(this).attr("id").split("-")[1];
+      var idEl = $(this).attr("id");
       console.log(hour);
       console.log(currentTime);
       if (hour < currentTime) {
@@ -35,9 +42,9 @@ $(document).ready(function () {
       
       }
       // retrieves stored text
-      var storeItem = localStorage.getItem(hour);
+      var storeItem = localStorage.getItem(idEl);
       // finds the class description and adds the value of stored item
-      $(this).find(".description").val(storeItem);
+      $(this).find(".description").text(storeItem);
     });
   }
   //displays the current time
