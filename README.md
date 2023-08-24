@@ -5,7 +5,7 @@ The workday scheduler allows you to add appointments or reminders and saves them
 ## Features
 - Displays the date 
 - Simple to use 
--efficient
+- Efficient
 
 ## usage
 
@@ -18,8 +18,9 @@ The workday scheduler allows you to add appointments or reminders and saves them
 
 ## Technologies used
 
--HTML
--CSS
--JavaScript (& jquery)
+- HTML
+- CSS
+- JavaScript (& jquery)
 
 ## Deployment
+
